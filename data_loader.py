@@ -149,7 +149,6 @@ class DataLoader:
         colorImage = self.get_rgb_image_name(camera_name, index)
         previousIndex = index-1
         colorImagePrevious = self.get_rgb_image_name(camera_name, previousIndex)
-        # newer format
         depthMotionImage = self.get_dmv_image_name(camera_name, index)
 
         config = self.camera_config[camera_name]
@@ -167,18 +166,17 @@ class DataLoader:
         image = np.hstack((dstack, mstack))
 
         height, width = config['shape']
-        # Title for Current
+
         text = 'Current: ' + str(index)
         self.write_text_on_image(image, text, (0, height), False)
-        # Title for Depth
+
         text = 'Depth: ' + str(index)
         self.write_text_on_image(image, text, (0, height*2), False)
-        # Title for Previous
+
         text = 'Previous: ' + str(previousIndex)
         self.write_text_on_image(image, text, (width, height), False)
-        # Title for Motion
+
         text = 'Motion: ' + str(index)
         self.write_text_on_image(image, text, (width, height*2), False)
 
-        # now show the image
         cv2.imshow(camera_name + ": Color + Depth | Color + Motion", image)

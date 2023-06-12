@@ -30,13 +30,13 @@ class DataLoader:
                 print('camera:', cam_name)
                 print('config:', ', '.join(values))
                 # config is : "name", "width", "height", "focalLength", "fov", "nearClipPlane", "farClipPlane"
-                full_config[values[0]] = {}
-                full_config[values[0]]['name'] = values[0]
-                full_config[values[0]]['shape'] = (int(values[2]), int(values[1])) # (height, width)
-                full_config[values[0]]['focal length'] = float(values[3])
-                full_config[values[0]]['fov'] = float(values[4])
-                full_config[values[0]]['near clip plane'] = float(values[5])
-                full_config[values[0]]['far clip plane'] = float(values[6])
+                full_config[cam_name] = {}
+                full_config[cam_name]['name'] = cam_name
+                full_config[cam_name]['shape'] = (int(values[2]), int(values[1])) # (height, width)
+                full_config[cam_name]['focal length'] = float(values[3])
+                full_config[cam_name]['fov'] = float(values[4])
+                full_config[cam_name]['near clip plane'] = float(values[5])
+                full_config[cam_name]['far clip plane'] = float(values[6])
         self.camera_config = full_config
 
     def load_raw_image(self, fname, dt, shape):

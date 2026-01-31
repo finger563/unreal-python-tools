@@ -62,7 +62,7 @@ class DataLoader:
         # replace far clip plane to make it easy to cut out. In UE, the clip
         # plane is at infinity, so we just set it here for viz.
         if farClipPlane == float('inf'):
-            farClipPlane = 100.0
+            farClipPlane = 5000.0
         # replace far clip plane and any negative depths to only visualize
         # meaningful data
         depth[depth < 0] = 0
@@ -82,7 +82,7 @@ class DataLoader:
         if newMin > _min:
             _min = newMin
         _range = _max-_min
-        if _min < 0 and _max > 1 and _range:
+        if _max > 1 and _range:
             depth -= _min
             depth /= _range
         # convert to 3 channel for visualization

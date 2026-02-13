@@ -253,6 +253,16 @@ class DataLoader:
         _mean, _std = (np.mean(motion_x), np.std(motion_x))
         print('Motion x (min, max, mean, std):', (_min, _max, _mean, _std))
         
+        # filter out any motion vectors which are higher than a threshold
+        motion_threshold = 100.0  # pixels per frame, adjust as needed
+        valid_mask = (np.abs(motion_x) < motion_threshold) & (np.abs (motion_y) < motion_threshold)
+        if not valid_mask.any():
+            print("Warning: No valid motion vectors below threshold")
+            valid_mask = np.ones_like(motion_x, dtype=bool)  # fallback to all valid
+
+        motion_x = np.where(valid_mask, motion_x, 0)
+        motion_y = np.where(valid_mask, motion_y, 0)
+
         _min, _max = (np.min(motion_y), np.max(motion_y))
         _mean, _std = (np.mean(motion_y), np.std(motion_y))
         print('Motion y (min, max, mean, std):', (_min, _max, _mean, _std))

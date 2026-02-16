@@ -411,12 +411,9 @@ class DataLoader:
         depth = cv2.cvtColor(depth, cv2.COLOR_GRAY2BGR)
         return depth
 
-    def convert_raw_to_motion(self, motion):
-        # this encoding is copied from the UE5 source code at
-        # Engine/Shaders/Private/Common.ush (EncodeVelocityToTexture and DecodeVelocityFromTexture)
-        invdiv = 1 / (.499*0.5)
-        motion = motion * invdiv - 32767 / 65535 * invdiv
-        motion = motion * abs(motion) * .5
+    def convert_raw_to_motion(self, motion, threshold=100):
+        # filter out any extreme outliers that are likely just noise from the encoding
+        motion[np.abs(motion) > threshold] = 0
 
         _min, _max = (np.min(motion[..., 0]), np.max(motion[..., 0]))
         _mean, _std = (np.mean(motion[..., 0]), np.std(motion[..., 0]))

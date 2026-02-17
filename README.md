@@ -1,6 +1,7 @@
-# Python Tools for Unreal Engine 5 / RAMMS
+# Python Tools for Unreal Engine 5
 
-Python libraries and scripts for interfacing with Unreal Engine 5, particularly the RAMMS centralized camera capture system.
+Python libraries and scripts for interfacing with Unreal Engine 5, particularly
+the [Camera Capture Plugin](https://github.com/finger563/unreal-camera-capture).
 
 ## Features
 
@@ -12,8 +13,7 @@ Python libraries and scripts for interfacing with Unreal Engine 5, particularly 
 - **Legacy Format Support**: Also works with older raw binary format
 
 Currently supports:
-- RAMMS Centralized Camera Capture System (EXR + JSON format)
-- [Camera Capture Component](https://github.com/finger563/unreal-camera-capture) (legacy raw format)
+- [Camera Capture Plugin](https://github.com/finger563/unreal-camera-capture) (EXR + JSON)
 - [RTSP Display](https://github.com/finger563/unreal-rtsp-display)
 
 ## Setup
@@ -36,16 +36,16 @@ pip install -r requirements.txt
 
 ```sh
 # View first available camera
-python display_raw.py ../Ramms/Saved/CameraCaptures
+python display_raw.py ${UE_PROJECT_PATH}/Saved/CameraCaptures
 
 # View specific camera
-python display_raw.py ../Ramms/Saved/CameraCaptures --actor BP_Kinova_Gen3_C_UAID_XXX --camera Gripper_CaptureCamera
+python display_raw.py ${UE_PROJECT_PATH}/Saved/CameraCaptures --actor BP_Kinova_Gen3_C_UAID_XXX --camera Gripper_CaptureCamera
 
 # View all cameras from an actor in grid
-python display_raw.py ../Ramms/Saved/CameraCaptures --actor BP_Mebot_Ramms_C_0 --all-cameras
+python display_raw.py ${UE_PROJECT_PATH}/Saved/CameraCaptures --actor BP_Mebot_Ramms_C_0 --all-cameras
 
 # Start from specific frame
-python display_raw.py ../Ramms/Saved/CameraCaptures --actor ActorName --all-cameras --start-frame 100
+python display_raw.py ${UE_PROJECT_PATH}/Saved/CameraCaptures --actor ActorName --all-cameras --start-frame 100
 ```
 
 ### Controls
@@ -56,7 +56,7 @@ python display_raw.py ../Ramms/Saved/CameraCaptures --actor ActorName --all-came
 
 ## Data Format
 
-### RAMMS Centralized Format
+### Camera Capture Plugin Format (EXR + JSON)
 
 Directory structure:
 ```
@@ -122,7 +122,6 @@ motion_color = loader.convert_motion_for_display(frame_data['motion_x'], frame_d
 **RGB**: Linear float (0-1) → sRGB uint8 (0-255) → BGR for OpenCV
 
 **Depth**: 
-- Auto-range based on mean ± 2σ
 - Invalid depths (0 or too large) shown as black
 - Statistics printed to console
 

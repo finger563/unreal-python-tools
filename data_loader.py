@@ -160,9 +160,7 @@ class DataLoader:
             pt = Imath.PixelType(Imath.PixelType.FLOAT)
             a_str = exr_file.channel('A', pt)
             depth = np.frombuffer(a_str, dtype=np.float32).reshape((height, width))
-            
-            # Depth is normalized 0-1, denormalize to cm (assumed max 10000cm = 100m)
-            result['depth'] = depth * 10000.0
+            result['depth'] = depth
         
         # Read Depth channel if explicitly present
         if 'Depth' in channels:
